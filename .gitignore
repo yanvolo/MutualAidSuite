@@ -1,4 +1,9 @@
+# System Cluter
 node_modules
 node_modules/*
+.idea
+.idea/*
+
+# Secure Data.
 private
-private/*
+ private/*
