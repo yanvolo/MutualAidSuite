@@ -1,11 +1,5 @@
 # MutualAidMidOhioAirtableForm
 
-This is the custom webserver that hosts the custom Airtable form that is necessary to feed 
+*Project is deprecated because I'm an idiot who doesn't know how to manage repos*
 
-## Installation/Setup
-
-### API Setup
-
-### Server Setup + Configuration
-
-## Form Maintience
+Updated Project is here: https://github.com/yanvolo/MutualAidSuite
