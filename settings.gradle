@@ -3,6 +3,7 @@ pluginManagement {
 		maven { url 'https://repo.spring.io/milestone' }
 		gradlePluginPortal()
 	}
+
 	resolutionStrategy {
 		eachPlugin {
 			if (requested.id.id == 'org.springframework.boot') {
@@ -11,6 +12,26 @@ pluginManagement {
 		}
 	}
 }
+
+plugins {
+	id "com.gradle.enterprise" version "3.1.1"
+}
+
+gradleEnterprise {
+	buildScan {
+		// always accept the terms of service
+		termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+		termsOfServiceAgree = 'yes'
+
+		// always publish a build scan if it fails
+		publishOnFailure()
+		// publishAlways()
+
+		// Build scan server to connect to
+		// default scans.gradle.com
+	}
+}
+
 rootProject.name = artifact
 // Include sub-project modules
 include 'server'
