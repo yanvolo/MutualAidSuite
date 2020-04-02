@@ -1,0 +1,58 @@
+buildscript {
+  repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+
+  dependencies {
+    classpath 'com.moowork.gradle:gradle-node-plugin:1.2.0'
+  }
+}
+
+apply plugin: 'base'
+apply plugin: 'com.moowork.node'
+
+node {
+  /* gradle-node-plugin configuration
+   * https://github.com/srs/gradle-node-plugin/blob/master/docs/node.md
+   *
+   * Task name pattern:
+   * ./gradlew npm_<command> Executes an NPM command.
+   */
+  version = '12.16.1'
+  npmVersion = '6.13.4'
+  download = false
+}
+
+task packageNpmApp (type: Zip) {
+  dependsOn npm_run_build
+  baseName "${rootProject.ngArtifact}"
+  extension 'jar'
+  destinationDir file("${projectDir}/dist")
+  from('build') {
+    // optional path under which output will be visible in Java Classpath, e.g. static resources path
+    into 'static'
+  }
+}
+
+configurations {
+  npmResources
+}
+
+configurations.default.extendsFrom(configurations.npmResources)
+assemble.dependsOn packageNpmApp
+
+artifacts {
+  npmResources(packageNpmApp.archivePath) {
+    builtBy packageNpmApp
+    type "jar"
+  }
+}
+
+clean {
+  delete packageNpmApp.archivePath
+  delete file("${projectDir}/dist")
+}
