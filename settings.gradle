@@ -11,4 +11,7 @@ pluginManagement {
 		}
 	}
 }
-rootProject.name = 'mutual-aid-columbus'
+rootProject.name = artifact
+// Include sub-project modules
+include 'server'
+include 'client'
