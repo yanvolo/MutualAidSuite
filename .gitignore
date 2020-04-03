@@ -2,7 +2,8 @@
 node_modules
 node_modules/*
 .gradle
-/build/
+*/build/
+*/dist/
 !gradle/wrapper/gradle-wrapper.jar
 /bin/
 *.log
@@ -30,6 +31,9 @@ private
 *.iml
 *.ipr
 /out/
+/client/*.iws
+*/client/*.iml
+/client/*.ipr
 
 ### NetBeans ###
 /nbproject/private/

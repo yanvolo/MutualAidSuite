@@ -8,17 +8,18 @@ buildscript {
   }
 
   dependencies {
-    classpath 'com.moowork.gradle:gradle-node-plugin:1.2.0'
+    classpath 'com.github.node-gradle:gradle-node-plugin:2.2.3'
   }
 }
 
 apply plugin: 'base'
-apply plugin: 'com.moowork.node'
+apply plugin: 'com.github.node-gradle.node'
 
 node {
   /* gradle-node-plugin configuration
-   * https://github.com/srs/gradle-node-plugin/blob/master/docs/node.md
-   *
+   * https://github.com/srs/gradle-node-plugin/blob/master/docs/node.md !!No longer maintained,
+   * forked to below repo.
+   * https://github.com/node-gradle/gradle-node-plugin/blob/master/docs/node.md
    * Task name pattern:
    * ./gradlew npm_<command> Executes an NPM command.
    */
@@ -29,9 +30,9 @@ node {
 
 task packageNpmApp (type: Zip) {
   dependsOn npm_run_build
-  baseName "${rootProject.ngArtifact} + '-' + ${rootProject.version}"
+  archiveBaseName = "${rootProject.ngArtifact}"
   extension 'jar'
-  destinationDir file('${projectDir}/dist')
+  destinationDirectory = file("${projectDir}/dist")
   from('build') {
     // optional path under which output will be visible in Java Classpath, e.g. static resources path
     into 'static'
@@ -46,13 +47,13 @@ configurations.default.extendsFrom(configurations.npmResources)
 assemble.dependsOn packageNpmApp
 
 artifacts {
-  npmResources(packageNpmApp.archivePath) {
+  npmResources(packageNpmApp.archiveFile) {
     builtBy packageNpmApp
     type "jar"
   }
 }
 
 clean {
-  delete packageNpmApp.archivePath
+  delete packageNpmApp.archiveFile
   delete file("${projectDir}/dist")
 }

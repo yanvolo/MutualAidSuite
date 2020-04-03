@@ -8,12 +8,12 @@ apply plugin: 'java'
 apply plugin: 'io.spring.dependency-management'
 
 
-
 /***********************************************************************************************
  * Gradle Project Properties
  * https://docs.gradle.org/current/javadoc/org/gradle/api/package-summary.html
  ***********************************************************************************************/
-project.version = " 0.0.1-SNAPSHOT build ?"
+//todo Add reference to build
+project.version = " 0.0.1-SNAPSHOT"
 
 // Java plug jar Properties
 sourceCompatibility = '12'
@@ -75,24 +75,33 @@ repositories {
 }
 
 dependencies {
+    implementation project(':client')
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.session:spring-session-core'
+    compileOnly 'org.projectlombok:lombok'
+
+    // SPRING SECURITY AND OAUTH2 DEPENDENCIES
     //implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     //implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     //implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.session:spring-session-core'
-    implementation project(':client')
 
-    compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'com.h2database:h2'
+    // ANNOTATION PROCESSORS
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
+
+    // DEVELOPMENT TOOLS
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.h2database:h2'
+
+    // TESTING
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.hamcrest:hamcrest-library:1.3'
+
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
-    testImplementation 'org.springframework.security:spring-security-test'
-    testImplementation 'org.hamcrest:hamcrest-library:1.3'
 }
 
 test {
